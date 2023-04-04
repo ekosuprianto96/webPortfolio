@@ -49,7 +49,7 @@
                     <div class="row">
                         <div class="col-md-6" style="height: 100vh;padding: 25px;">
                             <div class="text-my-about">
-                                <h3>About</h3>
+                                <h3>About Me</h3>
                                 <div>
                                     {{ $profile[0]->text_about }}
                                 </div>
@@ -85,7 +85,7 @@
                         <div class="col-12">
                             <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" style="height: 100%;">
                                 <div class="carousel-inner" style="max-height: 100%;height: 100%;">
-                                    <div class="carousel-item active" style="height: 100%">
+                                    {{-- <div class="carousel-item active" style="height: 100%">
                                         <div class="row h-100">
                                             <div class="col-lg-6 mb-3 mb-lg-0 mt-3 mt-lg-0">
                                                 <div class="text-desc">
@@ -102,7 +102,7 @@
                                                         </div>
                                                     </div>
                                                     <hr>
-                                                    <h3 class="mb-3"><i class="bi bi-info-circle-fill"></i> Project About</h3>
+                                                    <h3 class="mb-3"><i class="bi bi-info-circle-fill"></i> Description Project</h3>
                                                     <p>{{ $project[0]->description }}</p>
                                                 </div>
                                             </div>
@@ -113,13 +113,13 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    @foreach($project->skip(1) as $prj)
-                                        <div class="carousel-item" style="height: 100%">
+                                    </div> --}}
+                                    @foreach($project as $index => $prj)
+                                        <div class="carousel-item {{ $prj[0] == $index ? 'active' : '' }}" style="height: 100%">
                                             <div class="row h-100">
                                                 <div class="col-lg-6 mb-3 mb-lg-0 mt-3 mt-lg-0">
                                                     <div class="text-desc">
-                                                        <h3 class="mb-3"><i class="bi bi-file-earmark-text-fill"></i> Detail Project</h3>
+                                                        <h3 class="mb-3"><i class="bi bi-file-earmark-text-fill"></i> Description Project</h3>
                                                         <div class="row px-3">
                                                             <div class="col-12 mb-3">
                                                                 <span><strong>Project Name : </strong> {{ $prj->name }}</span>
@@ -405,7 +405,7 @@
                 fromData.append('uuid_visitor', localStorage.getItem('uuid_visitor'))
             }
             fromData.append('is_user', (JSON.parse(localStorage.getItem('is_user'))) ? false : true)
-            fetch('{{ route('visitor.set') }}', {
+            fetch('{{ route("visitor.set") }}', {
                 method: 'POST',
                 headers: {
                 'X-CSRF-TOKEN': _token
@@ -413,7 +413,6 @@
                 body: fromData
             }).then(response => response.json())
             .then(data => {
-                console.log(data)
                 if(data.message) {
                     localStorage.setItem('is_user', 'true');
                 }

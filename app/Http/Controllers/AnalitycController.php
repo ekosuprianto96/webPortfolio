@@ -38,15 +38,16 @@ class AnalitycController extends Controller
     }
     public function setDataVisitor(Request $request)
     {
-        // return $request->all();
+
         $data_website = DataWebsite::get()->first();
         $visitors = new Visitor();
-        $uuid = Str::uuid();
+        $uuid = Str::uuid(32);
         $uuidVistor = null;
         $data_website->page_view += 1;
         if ($request->is_user === 'true') {
             $data_website->visitor_count += 1;
             $visitors->uuid = $uuid;
+
             PenggunaWeb::create([
                 'visitor_uuid' => $uuid
             ]);
